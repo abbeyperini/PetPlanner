@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
 
 router.get('/sign-out', (req, res) => {
     req.session.isAuthenticated = false;
-    res.render('index')
+    res.redirect('/index')
 })
 
 router.post('/add-pet', (req, res) => {
