@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const indexRoutes = require('./routes/index.js');
 const dashRoutes = require('./routes/dashboard');
+const petRoutes = require('./routes/pet.js');
 const mustacheExpress = require('mustache-express');
 const session = require('express-session');
 const {v4: uuidv4} = require('uuid');
@@ -27,6 +28,7 @@ app.set('views', VIEWS_PATH);
 app.set('view engine', 'mustache');
 app.use('/index', indexRoutes);
 app.use('/dashboard', authenticate.authenticate, dashRoutes);
+app.use('/pet', authenticate.authenticate, petRoutes);
 
 global.users = [];
 
@@ -42,3 +44,9 @@ app.listen(3000, () => {
 // https://superjavascript.com/t/javascript-notifications/
 // add input pattern specific validation alerts
 // change logo color
+
+// 10/26
+// hardmode:
+// ability to update a pet - getting errors
+// hardermode:
+// login/register - tried and cannot get past unpacking SQL set

@@ -93,14 +93,11 @@ function persistedUser(username, password) {
     const persisted = users.find(user => {
         return user.username == username;
     });
-    console.log(persisted)
     if (persisted) {
         bcrypt.compare(password, persisted.password, function(err, result) {
             if(result) {
-                console.log(true)
                 return true;
             } else {
-                console.log(false)
                 return false;
             }
         });
