@@ -31,6 +31,10 @@
                     <input type="hidden" name="petid" value={{petid}}>
                     <button>Edit</button>
                 </form>
+                <form method="POST" action="/pet/pet-care">
+                    <input type="hidden" name="petid" value={{petid}}>
+                    <button>View Providers</button>
+                </form>
             {{/pets}}
         </aside>
         {{> footer}}

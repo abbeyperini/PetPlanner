@@ -5,6 +5,7 @@ const { v4: uuidv4 } = require('uuid');
 const router = express.Router();
 const authenticate = require('../authenticate');
 const bcrypt = require('bcryptjs');
+const db = require('../database');
 
 app.engine('mustache', mustacheExpress());
 app.set('views', './views');
@@ -28,80 +29,62 @@ router.post('/register/user', (req, res) => {
         const username = req.body.username;
         const password = req.body.password;
 
-        if (persistedUser(username, password)) {
-            res.render('index', {message: "Username exists."})
-        } else {
-            const userID = uuidv4();
-            bcrypt.genSalt(10, function(err, salt) {
-                bcrypt.hash(password, salt, function(err, hash) {
-                    if (err) {
-                        res.redirect('/register', {message: "Something went wrong."})
-                    } else {
-                        let user = {userID: userID, username: username, password: hash, pets: []};
-                        users.push(user);
-
-                        if (req.session) {
-                            req.session.isAuthenticated = true;
-                            req.session.username = username;
-                            req.session.userID = userID;
-                            res.redirect('/dashboard')
+        db.any('SELECT userid FROM users WHERE username = $1', [username])
+        .then((result) => {
+            if (result.length > 0) {
+                res.render('index', {message: "Username exists."})
+            } else {
+                bcrypt.genSalt(10, function(err, salt) {
+                    bcrypt.hash(password, salt, function(err, hash) {
+                        if (err) {
+                            res.redirect('/register', {message: "Something went wrong with the hash."})
                         } else {
-                            res.render('index', {message: "Something went wrong."})
-                        }
-                    };
+                            db.none('INSERT INTO users(username, password) VALUES($1,$2)',[username, hash])
+                            .then( () => {                            
+                                if (req.session) {
+                                    res.redirect('/index')
+                                } else {
+                                    res.render('index', {message: "Something went wrong."})
+                                }
+                            }).catch((error) => console.log(error))
+                        };
+                    });
                 });
-            });
-        };
+            }
+        }).catch((error) => console.log(error))
     } else {
         res.render('register', {message: "Please enter a new username and password."});
     };
 });
 
 router.post('/login', (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
-    // verify user exists, redirect to dashboard
-    const persisted = users.find(user => {
-        return user.username == username;
-    });
-
-    if (persisted) {
-        bcrypt.compare(password, persisted.password, function(err, result) {
-            if (result) {
-                if (req.session) {
-                    req.session.isAuthenticated = true;
-                    req.session.username = username;
-
-                    let user = users.find(user => {
-                        return user.username == username;
+    if (req.body.username && req.body.password) {
+        const username = req.body.username;
+        const password = req.body.password;
+        // verify user exists, redirect to dashboard
+        db.any('SELECT userid, password FROM users WHERE username = $1', [username])
+        .then((result) => {  
+            if (result.length == 0) {
+                res.render('register', {message: "Username does not exist - register below."})
+            } else {
+                result.forEach((item) => {
+                    let user = {userid: item.userid, password: item.password}
+                    bcrypt.compare(password, user.password, function(err, result) {
+                        if (result) {
+                            if (req.session) {
+                                req.session.isAuthenticated = true;
+                                req.session.userid = user.userid;
+                                res.redirect('/dashboard')     
+                            } else {
+                                res.render('index', {message: "Something went wrong."})
+                            }
+                        }
                     });
-
-                    req.session.userID = user.userID;
-
-                    res.redirect('/dashboard')
-                } else {
-                    res.render('index', {message: "Something went wrong."})
-                }
+                })
             }
-        });
+        }).catch((error) => console.log(error))
     } else {
-        res.render('index', {message: 'Username or password is incorrect or username does not exist.'})
-    }
+        res.render('register', {message: "Please enter new username and password."});
+    };
 });
 
-function persistedUser(username, password) {
-    const persisted = users.find(user => {
-        return user.username == username;
-    });
-    if (persisted) {
-        bcrypt.compare(password, persisted.password, function(err, result) {
-            if(result) {
-                return true;
-            } else {
-                return false;
-            }
-        });
-    } else {
-        return false;
-    };
-};

@@ -11,9 +11,9 @@ module.exports = router;
 app.use('/styles', express.static('styles'));
 
 router.get('/', (req, res) => {
-    let username = req.session.username;
+    let userid = req.session.userid;
 
-    db.any('SELECT petid, petname, imageurl, favorites FROM pets WHERE username = $1', [username])
+    db.any('SELECT petid, petname, imageurl, favorites FROM pets WHERE userid = $1', [userid])
     .then(result => {
         res.render('dashboard', {pets: result});
     }).catch((error) => console.log(error))

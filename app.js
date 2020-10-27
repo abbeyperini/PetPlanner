@@ -30,8 +30,6 @@ app.use('/index', indexRoutes);
 app.use('/dashboard', authenticate.authenticate, dashRoutes);
 app.use('/pet', authenticate.authenticate, petRoutes);
 
-global.users = [];
-
 app.get('/', (req, res) => {
     // home page with login boxes
     res.redirect('/index');
@@ -44,9 +42,4 @@ app.listen(3000, () => {
 // https://superjavascript.com/t/javascript-notifications/
 // add input pattern specific validation alerts
 // change logo color
-
-// 10/26
-// hardmode:
-// ability to update a pet - getting errors
-// hardermode:
-// login/register - tried and cannot get past unpacking SQL set
+// error messages to tell user what's going on with login/register without header errors
