@@ -13,14 +13,11 @@
         {{> menu}}
         <main>
             <form method="POST" action="/pet/create-pet">
-                <input type="text" placeholder="Pet Name" name="petname">
-                <input type="text" placeholder="Brand of Food" name="foodbrand">
-                <input type="text" placeholder="Cups per meal" name="amount">
-                <input type="text" placeholder="Meals per day" name="perday">
-                <input type="text" placeholder="Favorite things" name="favorites">
-                <input type="text" placeholder="Image URL" name="imageurl">
+                <input type="text" placeholder="Pet Name" name="name">
+                <input type="text" placeholder="favorites" name="favorites">
                 <label for="published">Publish pet to community page?</label>
                 <input type="checkbox" id="published" name="published" value="true" checked>
+                <input type="hidden" name="id" value={{id}}>
                 <button>Submit</button>
             </form>
         </main>

@@ -1,5 +1,6 @@
 .DS_Store
 secrets.js
+config.json
 
 # Logs
 logs

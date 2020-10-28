@@ -12,31 +12,19 @@
         {{> header}}
         {{> menu}}
         <main>
-            <nav>
-                <form method="GET" action="/pet/add-pet">
-                    <button>Add Pet</button>
-                </form>
-            </nav>
-        </main>
-        <aside>
             {{#pets}}
-                <h3>{{petname}}</h3>
-                <img src="{{imageurl}}" alt="pet photo" width="300px">
+                <h3>{{name}}</h3>
                 <p>Favorite things: {{favorites}}</p>
                 <form method="POST" action="/pet/delete">
-                    <input type="hidden" name="petid" value={{petid}}>
+                    <input type="hidden" name="id" value={{id}}>
                     <button>Delete</button>
                 </form>
                 <form method="POST" action="/pet/edit">
-                    <input type="hidden" name="petid" value={{petid}}>
+                    <input type="hidden" name="id" value={{id}}>
                     <button>Edit</button>
                 </form>
-                <form method="POST" action="/pet/pet-care">
-                    <input type="hidden" name="petid" value={{petid}}>
-                    <button>View Providers</button>
-                </form>
             {{/pets}}
-        </aside>
+        </main>
         {{> footer}}
     </body>
 </html>

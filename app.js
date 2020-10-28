@@ -13,6 +13,8 @@ const VIEWS_PATH = path.join(__dirname, '/views');
 const authenticate = require('./authenticate');
 const secrets = require('./secrets');
 const bcrypt = require('bcryptjs');
+const models = require('./models');
+const { Op } = require('sequelize');
 
 app.use(session({
     secret: 'secrets.secret',
@@ -27,19 +29,15 @@ app.engine('mustache', mustacheExpress(VIEWS_PATH + '/partials', '.mustache'));
 app.set('views', VIEWS_PATH);
 app.set('view engine', 'mustache');
 app.use('/index', indexRoutes);
+// removed authentication middleware from two below
 app.use('/dashboard', authenticate.authenticate, dashRoutes);
 app.use('/pet', authenticate.authenticate, petRoutes);
 
 app.get('/', (req, res) => {
-    // home page with login boxes
+    // redirecting to dashboard until authentication/encryption is set back up
     res.redirect('/index');
 });
 
 app.listen(3000, () => {
     console.log("Server is running...");
 });
-
-// https://superjavascript.com/t/javascript-notifications/
-// add input pattern specific validation alerts
-// change logo color
-// error messages to tell user what's going on with login/register without header errors
