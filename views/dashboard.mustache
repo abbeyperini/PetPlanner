@@ -15,14 +15,9 @@
             {{#pets}}
                 <h3>{{name}}</h3>
                 <p>Favorite things: {{favorites}}</p>
-                <form method="POST" action="/pet/delete">
-                    <input type="hidden" name="id" value={{id}}>
-                    <button>Delete</button>
-                </form>
-                <form method="POST" action="/pet/edit">
-                    <input type="hidden" name="id" value={{id}}>
-                    <button>Edit</button>
-                </form>
+                <a href="/pet/delete/{{id}}"><button>Delete</button></a>
+                <a href="/pet/edit/{{id}}"><button>Edit</button></a>
+                <a href="/dashboard/pet-care/{{id}}"><button>View Providers</button></a>
             {{/pets}}
         </main>
         {{> footer}}

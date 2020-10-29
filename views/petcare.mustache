@@ -14,28 +14,31 @@
         <main>
         <ul>
             {{#pets}}
-            <img src="{{imageurl}}" alt="pet photo" width="300px">
-            <h1>Name: {{petname}}</h1>
+            <h1>Name: {{name}}</h1>
             <ul>
                 {{#providers}}
                     <li>
                         <h3>Service: {{service}}</h3>
                         <p>Name: {{name}}</p>
-                        <p>Number: {{phone}}</p>
+                        <p>Number: {{number}}</p>
+                        <form method="POST" action="/dashboard/delete-care">
+                            <input type="hidden" name="id" value={{id}}>
+                            <button>Delete</button>
+                        </form>
                     </li>
                 {{/providers}}
             </ul>
-            {{/pets}}
             <li>
                 <h3>Add a pet care service provider</h3>
-                <form method="POST" action="/pet/add-care">
+                <form method="POST" action="/dashboard/add-care">
                     <input type="text" placeholder="Service Provided" name="service">
                     <input type="text" placeholder="Name" name="name">
-                    <input type="text" placeholder="Phone Number" name="phone">
-                    <input type="hidden" name="petid" value={{petid}}>
+                    <input type="text" placeholder="Phone Number" name="number">
+                    <input type="hidden" name="id" value={{id}}>
                     <button>add</button>
                 </form>
             </li>
+            {{/pets}}
         </ul>
         </main>
         {{> footer}}

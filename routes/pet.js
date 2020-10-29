@@ -30,7 +30,7 @@ router.post('/create-pet', (req, res) => {
     let pet = models.pets.build({
         name: name,
         favorites: favorites,
-        userid: userId,
+        user_id: userId,
         isPublished: published
     });
 
@@ -41,8 +41,8 @@ router.post('/create-pet', (req, res) => {
     })
 })
 
-router.post('/delete', (req,res) => {
-    let petId = req.body.id;
+router.get('/delete/:id', (req,res) => {
+    let petId = req.params.id;
 
     models.pets.destroy({
         where: {
@@ -53,8 +53,8 @@ router.post('/delete', (req,res) => {
     )
 })
 
-router.post('/edit', (req, res) => {
-    let petId = req.body.id;
+router.get('/edit/:id', (req, res) => {
+    let petId = req.params.id;
     models.pets.findByPk(petId).then(pet => {
         res.render('editPet', {pets: pet})
     })
@@ -81,7 +81,6 @@ router.post('/edit-pet', (req, res) => {
             id: petId
         }
     }).then(updatedPet => {
-        console.log(updatedPet)
         res.redirect('/dashboard')
     })
 })
