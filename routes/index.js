@@ -26,7 +26,7 @@ router.post('/register/user', (req, res) => {
     let username = req.body.username;
     let password = req.body.password;
 
-    if (username != null && password != null) {
+    if (username && password) {
         bcrypt.genSalt(10, function(err, salt) {
             bcrypt.hash(password, salt, function(err, hash) {
             
@@ -53,7 +53,7 @@ router.post('/login', (req, res) => {
     let password = req.body.password;
     let userid = '';
     
-    if (username != null && password != null) {
+    if (username && password) {
         models.Users.findOne({
             where: {
                 username: username
