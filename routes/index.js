@@ -33,6 +33,8 @@ router.post('/register/user', (req, res) => {
             }
         }).then(user => {
             if (user) {
+                res.render('index', {message: "Username exists."})
+            } else {
                 bcrypt.genSalt(10, function(err, salt) {
                     bcrypt.hash(password, salt, function(err, hash) {
                     
@@ -49,8 +51,6 @@ router.post('/register/user', (req, res) => {
                     
                     })
                 })
-            } else {
-                res.render('index', {message: "Username exists."})
             }
         })
     } else {
