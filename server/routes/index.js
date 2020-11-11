@@ -1,6 +1,5 @@
 const express =  require('express');
 const app = express();
-const mustacheExpress = require('mustache-express');
 const { v4: uuidv4 } = require('uuid');
 const router = express.Router();
 const authenticate = require('../authenticate');
@@ -8,9 +7,6 @@ const bcrypt = require('bcryptjs');
 const models = require('../models');
 const { Op } = require('sequelize');
 
-app.engine('mustache', mustacheExpress());
-app.set('views', './views');
-app.set('view engine', 'mustache');
 module.exports = router;
 app.use('/styles', express.static('styles'));
 
