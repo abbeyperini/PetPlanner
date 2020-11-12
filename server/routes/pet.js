@@ -26,53 +26,53 @@ router.post('/create-pet', (req, res) => {
         isPublished: published
     });
 
-    pet.save().then((savedPet) => {
-        res.json(savedPet)
+    pet.save().then((pet) => {
+        res.json(pet)
     }).catch((error) => {
         console.log(error)
     })
 })
 
-// router.get('/delete/:id', (req,res) => {
-//     let petId = req.params.id;
+router.delete('/delete/:id', (req,res) => {
+    let petId = req.params.id;
 
-//     models.pets.destroy({
-//         where: {
-//             id: petId
-//         }
-//     }).then(
-//         res.redirect('/dashboard')
-//     )
-// })
+    models.pets.destroy({
+        where: {
+            id: petId
+        }
+    }).then(deletedPet => {
+        res.json(deletedPet)
+    })
+})
 
-// router.get('/edit/:id', (req, res) => {
-//     let petId = req.params.id;
-//     models.pets.findByPk(petId).then(pet => {
-//         res.render('editPet', {pets: pet})
-//     })
-// })
+router.get('/edit/:id', (req, res) => {
+    let petId = req.params.id;
+    models.pets.findByPk(petId).then(pet => {
+        res.json(pet)
+    })
+})
 
-// router.post('/edit-pet', (req, res) => {
-//     let petId = req.body.id;
-//     let name = req.body.name;
-//     let favorites = req.body.favorites;
-//     let published = '';
+router.post('/edit-pet', (req, res) => {
+    let petId = req.body.id;
+    let name = req.body.name;
+    let favorites = req.body.favorites;
+    // let published = '';
 
-//     if (req.body.published == "true") {
-//         published = true;
-//     } else {
-//         published = false;
-//     };
+    // if (req.body.published == "true") {
+    //     published = true;
+    // } else {
+    //     published = false;
+    // };
 
-//     models.pets.update({
-//         name: name,
-//         favorites: favorites,
-//         isPublished: published
-//     }, {
-//         where: {
-//             id: petId
-//         }
-//     }).then(updatedPet => {
-//         res.redirect('/dashboard')
-//     })
-// })
+    models.pets.update({
+        name: name,
+        favorites: favorites,
+        // isPublished: published
+    }, {
+        where: {
+            id: petId
+        }
+    }).then(updatedPet => {
+        res.json(updatedPet)
+    })
+})

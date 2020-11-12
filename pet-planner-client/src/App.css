@@ -1,38 +1,116 @@
-.App {
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* colors
+light cyan - #E0FBFC
+powder blue - #C2DFE3
+english lavender - #B38D97
+pastel pink - #D5ACA9
+black - 000000 */
+
+
+html {
+  color: black;
+  background-color: #E0FBFC;
   text-align: center;
+  
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+li {
+  list-style-type: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.logo {
+  padding: 20px;
+  width: 200px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.menu {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: space-evenly;
+  text-align: center;
+  list-style-type: none;
+  padding: 10px;
+}
+
+.header, .footer {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  background-color: #C2DFE3;
 }
 
-.App-link {
-  color: #61dafb;
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 100px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+p {
+  padding: 10px;
+  margin: 5px;
+}
+
+input {
+  font-weight: bold;
+  margin: 20px;
+}
+
+button {
+  background-color: #B38D97;
+  border: none;
+  padding: 15px;
+  border-radius: 12px;
+  font-weight: bold;
+  margin: 10px;
+}
+
+.App {
+  display: grid;
+  grid-template-columns: 1fr;
+  column-gap: 150px;
+  row-gap: 150px;
+  margin: 10%;
+}
+
+.pet {
+  background-color: #D5ACA9;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.createPet, .editPet {
+  background-color: #D5ACA9;
+  margin: 5%;
+  border-radius: 8px;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:link, a:active, a:visited {
+  color: black;
+}
+
+a:hover, a:focus, button:hover, button:focus {
+  color: #E0FBFC;
+}
+
+@media screen and (min-width: 600px) {
+  .menu, .header {
+      flex-direction: row;
   }
-  to {
-    transform: rotate(360deg);
+
+  .App {
+    grid-template-columns: 1fr 1fr;
   }
 }

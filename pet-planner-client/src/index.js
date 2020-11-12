@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import BaseLayout from './components/BaseLayout';
 import CreatePet from './components/CreatePet';
+import EditPet from './components/EditPet';
 
 
 ReactDOM.render(
@@ -15,6 +15,7 @@ ReactDOM.render(
       <Switch>
         <Route component = {App} path="/" exact/>
         <Route component = {CreatePet} path="/create-pet" exact/>
+        <Route component = {EditPet} path="/pet/edit/:id" exact/>
       </Switch>
     </BaseLayout>
     </BrowserRouter>

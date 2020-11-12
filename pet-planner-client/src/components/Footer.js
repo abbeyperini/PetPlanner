@@ -2,7 +2,7 @@ import React from 'react';
 
 function Footer() {
     return(
-        <footer>
+        <footer className="footer">
             <p>&copy; 2020</p>
             <p>About</p>
         </footer>

@@ -1,12 +1,14 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { ReactComponent as Logo } from './images/pepper.svg'
 
 function Header() {
     return(
-        <header>
-            <nav>
-                <p><NavLink to="/">Home</NavLink></p>
-                <p><NavLink to="/create-pet">Create Pet</NavLink></p>
+        <header className="header">
+            <Logo className="logo"/>
+            <nav className="menu">
+                <p><Link to="/">Home</Link></p>
+                <p><Link to="/create-pet">Create Pet</Link></p>
             </nav>
         </header>
     )
