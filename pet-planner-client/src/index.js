@@ -2,10 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
 import BaseLayout from './components/BaseLayout';
 import CreatePet from './components/CreatePet';
 import EditPet from './components/EditPet';
+import IndexPage from './components/IndexPage';
 
 
 ReactDOM.render(
@@ -13,9 +14,13 @@ ReactDOM.render(
     <BrowserRouter>
     <BaseLayout>
       <Switch>
-        <Route component = {App} path="/" exact/>
-        <Route component = {CreatePet} path="/create-pet" exact/>
-        <Route component = {EditPet} path="/pet/edit/:id" exact/>
+        <Route exact path="/">
+          <Redirect to="/index"></Redirect>
+        </Route>
+        <Route component = {IndexPage} path="/index" exact />
+        <Route component = {App} path="/dashboard" exact/>
+        <Route component = {CreatePet} path="/dashboard/create-pet" exact/>
+        <Route component = {EditPet} path="/dashboard/pet/edit/:id" exact/>
       </Switch>
     </BaseLayout>
     </BrowserRouter>

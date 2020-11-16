@@ -39,9 +39,9 @@ function App() {
     return (
     <li key={pet.id} className="pet">
       <h3>{pet.name}</h3>
-      <p>{pet.favorites}</p>
+      <p>Favorites: {pet.favorites}</p>
       <button onClick={() => {handleDelete(pet)}}>Delete</button>
-      <Link to={generatePath("/pet/edit/:id", {id: pet.id})}><button>Edit</button></Link>
+      <Link to={generatePath("/dashboard/pet/edit/:id", {id: pet.id})}><button>Edit</button></Link>
     </li>
     )
   })

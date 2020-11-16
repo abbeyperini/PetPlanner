@@ -4,9 +4,13 @@ const router = express.Router();
 const models = require('../models');
 const { Op } = require('sequelize');
 const cors = require('cors');
+const DashboardController = require('../controllers/dashboardController');
+const dashboardController = new DashboardController();
 
 router.use(cors());
 module.exports = router;
+
+router.get('/community', dashboardController.getAll);
 
 // router.get('/', (req, res) => {
 //    let userId = req.session.userId;
@@ -19,13 +23,6 @@ module.exports = router;
 //         res.json(pets)
 //    })
 // })
-
-router.get('/community', (req, res) => {
-   models.pets.findAll()
-   .then( pets => {
-        res.json(pets)
-   }).catch(error => {console.log(error)})
-})
 
 // router.get('/pet-care/:id', (req, res) => {
 //    let petId = req.params.id;

@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 
-function EditPet() {
+function EditPet(props) {
     const [pet, setPet] = useState('');
-    const [edited, setEdited] = useState(false)
-    let { id } = useParams();
-
-    useEffect(() => {
-        fetchPet()
-    }, [])
+    const [edited, setEdited] = useState(false);
+    // using react-router-dom useParams to get id from url to fetch pet data
+    // let { id } = useParams();
+    let id = props.match.params.id;
 
     const fetchPet = () => {
         fetch(`http://localhost:8080/pet/edit/${id}`)
@@ -17,6 +15,10 @@ function EditPet() {
             setPet(results)
         })
     }
+
+    useEffect(() => {
+        fetchPet()
+    }, [])
 
     const handleOnChange = (e) => {
         setPet({
