@@ -1,6 +1,6 @@
 # PetPlanner
 
-<img src-"https://github.com/abbeyperini/PetPlanner/blob/master/pet-planner-client/public/favicon.ico" width="300" alt="PetPlanner logo">
+<img src="https://github.com/abbeyperini/PetPlanner/blob/master/pet-planner-client/public/favicon.ico" width="300" alt="PetPlanner logo">
 
 ## Table of Contents
 
