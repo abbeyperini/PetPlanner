@@ -19,3 +19,7 @@ This is a hobby project that aims to provide a hub for pet care reminders, notes
 * sequelize
 * mustache templates
 * react
+
+## Videos and Screenshots
+
+<img src="/screenshots/petPlanner.png" alt="PetPlanner Desktop Screenshot" width="900" height="600">
