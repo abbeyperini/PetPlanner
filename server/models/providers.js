@@ -11,13 +11,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       models.Providers.belongsTo(models.pets, {as: 'pet', foreignKey: 'pet_id'})
+      models.Providers.belongsTo(models.Users, {as: 'user', foreignKey: 'user_id'})
     }
   };
   Providers.init({
     name: DataTypes.STRING,
     number: DataTypes.STRING,
     service: DataTypes.STRING,
-    pet_id: DataTypes.INTEGER
+    pet_id: DataTypes.INTEGER,
+    user_id: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Providers',

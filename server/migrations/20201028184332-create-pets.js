@@ -14,6 +14,10 @@ module.exports = {
       favorites: {
         type: Sequelize.TEXT
       },
+      user_id: {
+        type: Sequelize.INTEGER,
+        references: {model: 'Users', field: 'id'}
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

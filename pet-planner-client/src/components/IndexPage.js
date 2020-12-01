@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { userActions } from '../store/actions/user.actions';
 
-function IndexPage() {
+function IndexPage(props) {
     const [user, setUser] = useState({});
-    const [login, setLogin] = useState("");
+    const dispatch = useDispatch();
+    
 
     const handleOnChange = (e) => {
         setUser({
@@ -13,24 +16,9 @@ function IndexPage() {
     }
 
     const handleOnClick = () => {
-        let userName = user.username;
-        let pass = user.password;
-
-        fetch('http://localhost:8080/index/login', {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                username: userName,
-                password: pass
-            })
-        }).then(response => response.json())
-        .then(result => {
-            setLogin(result.login)
-            setUser({
-                ...user,
-                id: result.user
-            })
-        })
+        if (user.username && user.password) {
+            dispatch(userActions.login(user))
+        }  
     }
 
     return(

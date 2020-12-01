@@ -17,7 +17,6 @@ module.exports = (sequelize, DataTypes) => {
   pets.init({
     name: DataTypes.STRING,
     favorites: DataTypes.TEXT,
-    isPublished: DataTypes.BOOLEAN,
     user_id: DataTypes.INTEGER
   }, {
     sequelize,
