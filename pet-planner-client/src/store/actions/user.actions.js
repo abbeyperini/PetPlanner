@@ -1,6 +1,6 @@
 import { userConstants } from '../actions/actionTypes';
 import { userService } from '../user.service';
-import { history } from '../helpers/history'
+import { history } from '../../helpers/history';
 
 export const userActions = {
     register,
@@ -14,13 +14,11 @@ function register(user) {
         .then(
             result => {
                 if (result.userAdded === true) {
-                    localStorage.setItem('user', JSON.stringify(result.user))
-                    dispatch(success());
-                    history.push('/');
+                    dispatch(success(result.user));
+                    history.push('/dashboard');
                 } else if (result.userAdded === false) {
                     let error = "Username exists."
                     dispatch(failure(error))
-                    history.push('/');
                 }
             },
             error => {
@@ -39,9 +37,8 @@ function login(user) {
         .then(
             result => {
                 if (result.login === true) {
-                    localStorage.setItem('user', JSON.stringify(result.user))
-                    dispatch(success());
-                    history.push('/');
+                    dispatch(success(result.user));
+                    history.push('/dashboard');
                 } else if (result.login === false) {
                     let error = "Username does not exist.";
                     dispatch(failure(error));
@@ -53,7 +50,7 @@ function login(user) {
         );
     };
     function success(user) { return { type: userConstants.LOGIN_SUCCESS, payload: user } }
-    function failure(error) { return { type: userConstants.LOGIN_FAILURE, payload:error } }
+    function failure(error) { return { type: userConstants.LOGIN_FAILURE, payload: error } }
 }
 
 function logout() {

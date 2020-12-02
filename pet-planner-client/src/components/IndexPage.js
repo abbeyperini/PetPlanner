@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { userActions } from '../store/actions/user.actions';
+import { withRouter } from 'react-router';
 
 function IndexPage(props) {
     const [user, setUser] = useState({});
     const dispatch = useDispatch();
-    
 
     const handleOnChange = (e) => {
         setUser({
@@ -16,6 +16,7 @@ function IndexPage(props) {
     }
 
     const handleOnClick = () => {
+
         if (user.username && user.password) {
             dispatch(userActions.login(user))
         }  
@@ -31,4 +32,11 @@ function IndexPage(props) {
     )
 }
 
-export default IndexPage;
+const mapStateToProps = (state) => {
+    return {
+        login: state.login
+    }
+}
+
+
+export default withRouter(connect(mapStateToProps)(IndexPage));

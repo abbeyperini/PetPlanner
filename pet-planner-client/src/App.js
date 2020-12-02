@@ -1,56 +1,23 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { generatePath } from "react-router";
+import React from 'react';
+import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
+import Dashboard from './components/Dashboard';
+import RegisterPage from './components/RegisterPage';
+import IndexPage from './components/IndexPage';
+import PrivateRoute from './components/PrivateRoute';
+import CreatePet from './components/CreatePet';
+import EditPet from './components/EditPet';
 
 function App() {
-  const [pets, setPets] = useState([]);
-
-  useEffect(() => {
-    getAllPets()
-  }, [])
-
-  // keeping this outside useEffect means you can call it from wherever
-  const getAllPets = () => {
-    fetch('http://localhost:8080/dashboard/community')
-    .then(response => response.json())
-    .then(results => {
-      // setting the state will call render
-      setPets(results)
-    })
-  }
-
-  const handleDelete = (pet) => {
-    fetch(`http://localhost:8080/pet/delete/${pet.id}`, {
-      method: "DELETE"
-    })
-    .then(response => response.json())
-    .then((response) => {
-      if (response > 0) {
-        console.log(response)
-        getAllPets()
-      }
-    })
-    .catch((error) => console.log(error))
-  }
-
-  let petItems = pets.map(pet => {
-
-    return (
-    <li key={pet.id} className="pet">
-      <h3>{pet.name}</h3>
-      <p>Favorites: {pet.favorites}</p>
-      <button onClick={() => {handleDelete(pet)}}>Delete</button>
-      <Link to={generatePath("/dashboard/pet/edit/:id", {id: pet.id})}><button>Edit</button></Link>
-    </li>
-    )
-  })
-
   return (
-    <ul className="App">
-      {petItems}
-    </ul>
-  );
+
+    <Switch>
+      <Route path='/index' component={IndexPage} />
+      <Route path='/dashboard' component={Dashboard} />
+      </Switch>
+
+  )
+  
 }
 
-export default App;
+export default withRouter(App);

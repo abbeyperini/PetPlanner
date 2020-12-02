@@ -2,6 +2,7 @@ import { userConstants } from './actions/actionTypes';
 
 const initialState = {
     login: false,
+    user: ''
 }
 
 const reducer = (state = initialState, action) => {
@@ -21,7 +22,8 @@ const reducer = (state = initialState, action) => {
         case userConstants.LOGIN_SUCCESS:
             return {
                 ...state,
-                login: true
+                login: true,
+                user: action.payload
             };
         case userConstants.LOGOUT:
             return {

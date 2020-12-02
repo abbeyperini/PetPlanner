@@ -1,19 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
-import BaseLayout from './components/BaseLayout';
-import CreatePet from './components/CreatePet';
-import EditPet from './components/EditPet';
 import IndexPage from './components/IndexPage';
+import CreatePet from './components/CreatePet';
+import reportWebVitals from './reportWebVitals';
+import { Router, Switch, Route } from 'react-router-dom';
+import BaseLayout from './components/BaseLayout';
 import { applyMiddleware, compose, createStore } from 'redux';
 import reducer from './store/reducer';
 import { Provider } from 'react-redux';
-import RegisterPage from './components/RegisterPage';
 import thunk from 'redux-thunk';
-import { history } from './store/helpers/history';
-import { PrivateRoute } from './components/PrivateRoute';
+import { history } from './helpers/history';
+
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
@@ -21,22 +18,16 @@ const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter history={history}>
+    <Router history={history}>
       <Provider store={store}>
         <BaseLayout>
           <Switch>
-            <Route exact path="/">
-              <Redirect to="/index"></Redirect>
-            </Route>
-            <Route component = {IndexPage} path="/index" exact />
-            <Route component = {RegisterPage} path="/register" exact />
-            <PrivateRoute component = {App} path="/dashboard" exact/>
-            <PrivateRoute component = {CreatePet} path="/dashboard/create-pet" exact/>
-            <PrivateRoute component = {EditPet} path="/dashboard/pet/edit/:id" exact/>
+            <Route path='/index' component={IndexPage} />
+            <Route path='/dashboard' component={CreatePet} />
           </Switch>
         </BaseLayout>
       </Provider>
-    </BrowserRouter>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );

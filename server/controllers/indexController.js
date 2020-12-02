@@ -55,7 +55,8 @@ class IndexController {
                     
                     bcrypt.compare(password, storedPassword)
                     .then((result) => {
-                        res.json({login: true, userid: user.id})
+                        console.log(user)
+                        res.json({login: true, user: user.id})
                     })
                 }
             })

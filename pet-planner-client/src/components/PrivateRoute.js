@@ -1,11 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 
-function PrivateRoute({ component: Component, roles, ...rest }) {
+function PrivateRoute(props, { component: Component, roles, ...rest }) {
     return (
         <Route {...rest} render={props => {
-            if (!localStorage.getItem('user')) {
-                return <Redirect to={{ pathname: '/login', state: { from: props.location} }} />
+            if (!props.login) {
+                return <Redirect to={{ pathname: '/index', state: { from: props.location} }} />
             }
 
             return <Component {...props} />
@@ -13,4 +14,11 @@ function PrivateRoute({ component: Component, roles, ...rest }) {
     );
 }
 
-export { PrivateRoute };
+const mapStateToProps = (state) => {
+    return {
+        login: state.login
+    }
+}
+
+
+export default connect(mapStateToProps)(PrivateRoute);

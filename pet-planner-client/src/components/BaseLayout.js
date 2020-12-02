@@ -6,11 +6,6 @@ function BaseLayout(props) {
     return (
         <div>
             <Header />
-            <div>
-              {alert.message &&
-                <div className={`alert ${alert.type}`}>{alert.message}</div>
-              }  
-            </div>
             <main>
                 {props.children}
             </main>
