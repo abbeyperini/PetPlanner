@@ -1,8 +1,9 @@
-import { userConstants } from './actions/actionTypes';
+import { userConstants } from '../actions/user.actionTypes';
 
+// user 1 until private routes
 const initialState = {
     login: false,
-    user: ''
+    user: 1
 }
 
 const reducer = (state = initialState, action) => {

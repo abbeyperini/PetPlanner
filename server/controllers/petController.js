@@ -4,18 +4,20 @@ class PetController {
     createPet = (req, res) => {
         let name = req.body.name;
         let favorites = req.body.favorites;
-        let published = '';
+        let user = req.body.user;
+        // let published = '';
 
-        if (req.body.published == "true") {
-            published = true;
-        } else {
-            published = false;
-        };
+        // if (req.body.published == "true") {
+        //     published = true;
+        // } else {
+        //     published = false;
+        // };
 
         let pet = models.pets.build({
             name: name,
             favorites: favorites,
-            isPublished: published
+            user_id: user
+            // isPublished: published
         });
 
         pet.save().then((pet) => {

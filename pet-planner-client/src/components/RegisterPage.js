@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { userActions } from '../store/actions/user.actions';
-import { withRouter } from 'react-router';
 
 function RegisterPage(props) {
     const [user, setUser] = useState({
@@ -10,7 +9,7 @@ function RegisterPage(props) {
         password: ''
     });
 
-    const dispatch =useDispatch();
+    const dispatch = useDispatch();
 
     const handleOnChange = (e) => {
         setUser({

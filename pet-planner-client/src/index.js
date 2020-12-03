@@ -1,33 +1,46 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import IndexPage from './components/IndexPage';
-import CreatePet from './components/CreatePet';
 import reportWebVitals from './reportWebVitals';
-import { Router, Switch, Route } from 'react-router-dom';
-import BaseLayout from './components/BaseLayout';
-import { applyMiddleware, compose, createStore } from 'redux';
-import reducer from './store/reducer';
 import { Provider } from 'react-redux';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import { history } from './helpers/history';
+import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
+import BaseLayout from './components/BaseLayout';
+import IndexPage from './components/IndexPage';
+import RegisterPage from './components/RegisterPage';
+import CreatePet from './components/CreatePet';
+import Dashboard from './components/Dashboard';
+import './App.css'
+import userReducer from './store/reducers/userReducer';
+import petReducer from './store/reducers/petReducer';
 
+const rootReducer = combineReducers({
+  userR: userReducer,
+  petsR: petReducer
+})
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
+
+const store = createStore(rootReducer, composeEnhancers(
+      applyMiddleware(thunk) // middleware 
+    ));
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router history={history}>
-      <Provider store={store}>
+    <Provider store={store}>
+      <HashRouter>
         <BaseLayout>
           <Switch>
-            <Route path='/index' component={IndexPage} />
-            <Route path='/dashboard' component={CreatePet} />
+            <Route path="/index" component={IndexPage} />
+            <Route path="/register" component={RegisterPage} />
+            <Route exact path="/dashboard" component={Dashboard} />
+            <Route path="/dashboard/create-pet" component={CreatePet} />
+            <Redirect from='/' to='/index' />
           </Switch>
         </BaseLayout>
-      </Provider>
-    </Router>
+      </HashRouter>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

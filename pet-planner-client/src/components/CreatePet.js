@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { petActions } from '../store/actions/pets.actions';
 
-function CreatePet() {
+function CreatePet(props) {
   const [pet, setPet] = useState([]);
-  const [added, setAdded] = useState('');
+  const [added, setAdded] = useState(false);
 
   const handleOnChange = (e) => {
     setAdded(false);
@@ -13,18 +15,15 @@ function CreatePet() {
   };
 
   const handleOnClick = () => {
+    let petItem = {
+      name: pet.name,
+      favorites: pet.favorites,
+      user: props.user
+    }
 
-    fetch('http://localhost:8080/pet/create-pet', {
-      method: 'POST',
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        name: pet.name,
-        favorites: pet.favorites
-      }) 
-    }).then(result => {
-      setAdded(true)
-    });
-  };
+    props.addPet(petItem)
+    setAdded(true)
+  }
 
   return (
     <div className="createPet">
@@ -36,4 +35,16 @@ function CreatePet() {
   );
 };
 
-export default CreatePet;
+const mapStateToProps = (state) => {
+  return {
+    user: state.userR.user
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addPet: (pet) => dispatch(petActions.addPet(pet))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreatePet);

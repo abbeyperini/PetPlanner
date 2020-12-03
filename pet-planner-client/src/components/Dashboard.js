@@ -1,59 +1,69 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { generatePath, withRouter } from "react-router";
+import { petActions } from '../store/actions/pets.actions';
 
 
-function Dashboard() {
-    const [pets, setPets] = useState([]);
+function Dashboard(props) {
 
     useEffect(() => {
-        getAllPets()
+        props.fetchPets(props.user)
     }, [])
 
-    // keeping this outside useEffect means you can call it from wherever
-    const getAllPets = () => {
-        fetch('http://localhost:8080/dashboard/community')
-        .then(response => response.json())
-        .then(results => {
-        // setting the state will call render
-        setPets(results)
-        })
-    }
+    // const handleDelete = (pet) => {
+    //     fetch(`http://localhost:8080/pet/delete/${pet.id}`, {
+    //     method: "DELETE"
+    //     })
+    //     .then(response => response.json())
+    //     .then((response) => {
+    //     if (response > 0) {
+    //         console.log(response)
+    //         getPets()
+    //     }
+    //     })
+    //     .catch((error) => console.log(error))
+    // }
 
-    const handleDelete = (pet) => {
-        fetch(`http://localhost:8080/pet/delete/${pet.id}`, {
-        method: "DELETE"
-        })
-        .then(response => response.json())
-        .then((response) => {
-        if (response > 0) {
-            console.log(response)
-            getAllPets()
-        }
-        })
-        .catch((error) => console.log(error))
-    }
-
-    let petItems = pets.map(pet => {
-
+    if (!props.pets) {
         return (
-        <div>
-            <h1>Dashboard</h1>
-            <li key={pet.id} className="pet">
-                <h3>{pet.name}</h3>
-                <p>Favorites: {pet.favorites}</p>
-                <button onClick={() => {handleDelete(pet)}}>Delete</button>
-                <Link to={generatePath("/dashboard/pet/edit/:id", {id: pet.id})}><button>Edit</button></Link>
-            </li>
-        </div>
+            <ul className="App">
+                <Link to="/dashboard/create-pet"><h1>Create a pet!</h1></Link> 
+            </ul>
+        )
+    }
+
+    let petItems = props.pets.map(pet => {
+        return(
+            <div>
+                <li key={pet.id} className="pet">
+                    <h3>{pet.name}</h3>
+                    <p>Favorites: {pet.favorites}</p>
+                    {/* <button onClick={() => {handleDelete(pet)}}>Delete</button> */}
+                    <Link to={generatePath("/dashboard/pet/edit/:id", {id: pet.id})}><button>Edit</button></Link>
+                </li>
+            </div>
         )
     })
 
     return (
-        <ul className="App">
-        {petItems}
+        <ul>
+            {petItems}
         </ul>
-    );
+        )
 }
 
-export default withRouter(Dashboard);
+const mapStateToProps = (state) => {
+    return {
+        user: state.userR.user,
+        pets: state.petsR.pets
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchPets: (user) => dispatch(petActions.fetchPets(user))
+    }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Dashboard));

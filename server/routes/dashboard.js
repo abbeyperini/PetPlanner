@@ -10,19 +10,8 @@ const dashboardController = new DashboardController();
 router.use(cors());
 module.exports = router;
 
+router.get('/:id', dashboardController.getUser)
 router.get('/community', dashboardController.getAll);
-
-// router.get('/', (req, res) => {
-//    let userId = req.session.userId;
-
-//    models.pets.findAll({
-//       where: {
-//          user_id: userId
-//       }
-//    }).then( pets => {
-//         res.json(pets)
-//    })
-// })
 
 // router.get('/pet-care/:id', (req, res) => {
 //    let petId = req.params.id;

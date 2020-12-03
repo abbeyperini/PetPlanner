@@ -6,6 +6,7 @@ import { withRouter } from 'react-router';
 
 function IndexPage(props) {
     const [user, setUser] = useState({});
+    //rewrite as dispatch to props
     const dispatch = useDispatch();
 
     const handleOnChange = (e) => {
@@ -34,7 +35,7 @@ function IndexPage(props) {
 
 const mapStateToProps = (state) => {
     return {
-        login: state.login
+        login: state.userR.login
     }
 }
 
