@@ -1,6 +1,9 @@
 export const petService = {
     fetchPets,
-    addPet
+    addPet,
+    deletePet,
+    fetchSinglePet,
+    editPet
 };
 
 function fetchPets(user) {
@@ -8,18 +11,48 @@ function fetchPets(user) {
         .then(handleResponse)
 }
 
+function fetchSinglePet(id) {
+    return fetch(`http://localhost:8080/pet/edit/${id}`)
+    .then(handleResponse)
+}
+
 function addPet(pet) {
+
     let requestOptions = {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
             name: pet.name,
-            favorite: pet.favorites,
+            favorites: pet.favorites,
             user: pet.user
         })
     }
 
     return fetch('http://localhost:8080/pet/create-pet', requestOptions)
+    .then(handleResponse)
+}
+
+function deletePet(pet) {
+    let requestOptions = {
+        method: "DELETE"
+    }
+
+    return fetch(`http://localhost:8080/pet/delete/${pet.id}`, requestOptions)
+    .then(handleResponse)
+}
+
+function editPet(pet) {
+    let requestOptions = {
+        method: 'POST',
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            id: pet.id,
+            name: pet.name,
+            favorites: pet.favorites
+        })
+    }
+
+    return fetch('http://localhost:8080/pet/edit-pet', requestOptions)
     .then(handleResponse)
 }
 

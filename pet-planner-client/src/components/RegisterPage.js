@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import { userActions } from '../store/actions/user.actions';
 
 function RegisterPage(props) {
@@ -29,7 +29,7 @@ function RegisterPage(props) {
             <input onChange={handleOnChange} type="text" placeholder="username" name="username"></input>
             <input onChange={handleOnChange} type="text" placeholder="password" name="password"></input>
             <button onClick={handleOnClick}>Register</button>
-            <p>Already have a username? <Link to="/index">Login</Link></p>
+            <p>Already have a username? <NavLink to="/index">Login</NavLink></p>
         </div>
     )
 }

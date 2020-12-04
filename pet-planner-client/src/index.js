@@ -10,13 +10,18 @@ import IndexPage from './components/IndexPage';
 import RegisterPage from './components/RegisterPage';
 import CreatePet from './components/CreatePet';
 import Dashboard from './components/Dashboard';
+import EditPet from './components/EditPet';
 import './App.css'
 import userReducer from './store/reducers/userReducer';
-import petReducer from './store/reducers/petReducer';
+import { allPetsReducer, singlePetReducer, addPetReducer, deletePetReducer, editPetReducer } from './store/reducers/petReducer';
 
 const rootReducer = combineReducers({
   userR: userReducer,
-  petsR: petReducer
+  pets: allPetsReducer,
+  singlePet: singlePetReducer,
+  addPet: addPetReducer,
+  deletePet: deletePetReducer,
+  editPet: editPetReducer
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -36,7 +41,8 @@ ReactDOM.render(
             <Route path="/register" component={RegisterPage} />
             <Route exact path="/dashboard" component={Dashboard} />
             <Route path="/dashboard/create-pet" component={CreatePet} />
-            <Redirect from='/' to='/index' />
+            <Route path="/dashboard/pet/edit/:id" component={EditPet} />
+            <Redirect exact from="/" to="/index" />
           </Switch>
         </BaseLayout>
       </HashRouter>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
 import { userActions } from '../store/actions/user.actions';
 import { withRouter } from 'react-router';
@@ -28,7 +28,7 @@ function IndexPage(props) {
             <input onChange={handleOnChange} type="text" placeholder="username" name="username"></input>
             <input onChange={handleOnChange} type="text" placeholder="password" name="password"></input>
             <button onClick={handleOnClick}>Login</button>
-            <p>Need a username? <Link to="/register">Register</Link></p>
+            <p>Need a username? <NavLink to="/register">Register</NavLink></p>
         </div>
     )
 }

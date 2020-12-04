@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ReactComponent as Logo } from './images/pepper.svg';
 
@@ -13,8 +13,8 @@ function Header(props) {
             <h1>PetPlanner</h1>
             <Logo className="logo"/>
             <nav className="menu">
-                <p><Link to="/dashboard">Home</Link></p>
-                <p><Link to="/dashboard/create-pet">Create Pet</Link></p>
+                <p><NavLink to="/dashboard">Home</NavLink></p>
+                <p><NavLink to="/dashboard/create-pet">Create Pet</NavLink></p>
             </nav>
         </header>
     )

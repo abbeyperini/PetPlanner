@@ -20,7 +20,6 @@ function CreatePet(props) {
       favorites: pet.favorites,
       user: props.user
     }
-
     props.addPet(petItem)
     setAdded(true)
   }
