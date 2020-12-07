@@ -14,7 +14,7 @@ function fetchPets(user) {
         petService.fetchPets(user)
         .then(
             result => {
-              dispatch(success(result))
+              dispatch(success(result.data))
             },
             error => {
               dispatch(failure(error))  

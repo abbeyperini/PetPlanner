@@ -1,5 +1,6 @@
 const models = require('../models');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 class IndexController {
 
@@ -55,8 +56,11 @@ class IndexController {
                     
                     bcrypt.compare(password, storedPassword)
                     .then((result) => {
-                        console.log(user)
-                        res.json({login: true, user: user.id})
+                        const token = jwt.sign({ userId: user.id}, 'SECRETKEY')
+                        res.json({login: true, token: token, user: user.id})
+                    })
+                    .catch((error) => {
+                        res.json({login: false, error: error})
                     })
                 }
             })

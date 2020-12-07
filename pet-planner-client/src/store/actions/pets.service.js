@@ -1,3 +1,5 @@
+import Axios from "axios";
+
 export const petService = {
     fetchPets,
     addPet,
@@ -7,8 +9,7 @@ export const petService = {
 };
 
 function fetchPets(user) {
-    return fetch(`http://localhost:8080/dashboard/${user}`)
-        .then(handleResponse)
+    return Axios.get(`http://localhost:8080/dashboard/${user}`)
 }
 
 function fetchSinglePet(id) {

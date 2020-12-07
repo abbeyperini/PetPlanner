@@ -1,6 +1,7 @@
 import { userConstants } from './user.actionTypes';
 import { userService } from './user.service';
 import history from '../../utils/history';
+import { setAuthenticationHeader } from '../../utils/authenticate';
 
 export const userActions = {
     register,
@@ -36,10 +37,13 @@ function login(user) {
         userService.login(user)
         .then(
             result => {
-                if (result.login === true) {
-                    dispatch(success(result.user));
+                if (result.data.login === true) {
+                    const token = result.data.token;
+                    localStorage.setItem('jsonwebtoken', token);
+                    setAuthenticationHeader(token);
+                    dispatch(success(result.data.user));
                     history.push('/dashboard');
-                } else if (result.login === false) {
+                } else if (result.data.login === false) {
                     let error = "Username does not exist.";
                     dispatch(failure(error));
                 }

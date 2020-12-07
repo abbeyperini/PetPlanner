@@ -6,11 +6,12 @@ const { Op } = require('sequelize');
 const cors = require('cors');
 const DashboardController = require('../controllers/dashboardController');
 const dashboardController = new DashboardController();
+const authenticate = require('../authMiddleware');
 
 router.use(cors());
 module.exports = router;
 
-router.get('/:id', dashboardController.getUser)
+router.get('/:id', authenticate, dashboardController.getUser)
 router.get('/community', dashboardController.getAll);
 
 // router.get('/pet-care/:id', (req, res) => {

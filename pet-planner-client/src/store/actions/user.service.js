@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const userService = {
     register,
     login,
@@ -18,14 +20,10 @@ function register(user) {
 
 function login(user) {
 
-    const requestOptions = {
-        method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(user)
-    };
-
-    return fetch('http://localhost:8080/index/login', requestOptions)
-    .then(handleResponse)
+    return axios.post('http://localhost:8080/index/login', {
+        username: user.username,
+        password: user.password
+    })
 }
 
 function logout() {
