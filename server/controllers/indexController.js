@@ -56,8 +56,12 @@ class IndexController {
                     
                     bcrypt.compare(password, storedPassword)
                     .then((result) => {
-                        const token = jwt.sign({ userId: user.id}, 'SECRETKEY')
-                        res.json({login: true, token: token, user: user.id})
+                        if (result) {
+                            const token = jwt.sign({ userId: user.id}, 'SECRETKEY')
+                            res.json({login: true, token: token, user: user.id})
+                        } else {
+                            res.json({login: false})
+                        }
                     })
                     .catch((error) => {
                         res.json({login: false, error: error})
